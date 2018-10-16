@@ -12,16 +12,14 @@ import org.apache.lucene.store.FSDirectory;
 
 public class InvertedIndex {
 
-    public final String INDEX_DIRECTORY = "/Users/sonalsingh/index";
+    public String INDEX_DIRECTORY;
     public final int NO_MORE_DOCS = 2147483647;
     public DirectoryReader directoryReader;
-    public HashMap<String, LinkedList<Integer>> invertedIndexMap = new HashMap<>();
+    public HashMap<String, LinkedList<Integer>> invertedIndexMap;
 
-    public static void main(String[] args) throws IOException {
-        InvertedIndex obj = new InvertedIndex();
-        obj.readIndex();
-        obj.constructInvertedIndex();
-        obj.printInvertedIndexMap();
+    public InvertedIndex (String path) {
+        INDEX_DIRECTORY = path;
+        invertedIndexMap = new HashMap<>();
     }
 
     public void readIndex() {
@@ -39,7 +37,7 @@ public class InvertedIndex {
         }
     }
 
-    public void constructInvertedIndex() {
+    public HashMap<String, LinkedList<Integer>> constructInvertedIndex() {
 
         try {
             // fields contain id, text_en, text_es, text_fr
@@ -86,9 +84,10 @@ public class InvertedIndex {
             System.out.println(e);
         }
 
+        return invertedIndexMap;
     }
 
-    public void printInvertedIndexMap() {
+    public void printInvertedIndexMap(HashMap<String,LinkedList<Integer>> invertedIndexMap) {
 
         for(String key : invertedIndexMap.keySet()) {
             LinkedList<Integer> value = invertedIndexMap.get(key);
@@ -97,6 +96,6 @@ public class InvertedIndex {
     }
 
     public HashMap<String, LinkedList<Integer>> getMap() {
-        return invertedIndexMap;
+        return this.invertedIndexMap;
     }
 }
