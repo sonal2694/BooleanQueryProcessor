@@ -17,8 +17,8 @@ public class App {
         String input = "input.txt";
         String output = "output.txt";
 
-        QueryProcessor queryProcessor = new QueryProcessor(input, output);
-        queryProcessor.process(invertedIndexMap);
+        QueryProcessor queryProcessor = new QueryProcessor(input, output, invertedIndexMap);
+        queryProcessor.process();
     }
 
 }
