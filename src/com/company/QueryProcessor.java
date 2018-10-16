@@ -10,6 +10,7 @@ public class QueryProcessor {
     public String inputFileName;
     public String outputFileName;
     public HashMap<String, LinkedList<Integer>> invertedIndexMap;
+    int noOfComparisons;
 
     public QueryProcessor(String input, String output, HashMap<String,LinkedList<Integer>> map) {
 
@@ -68,18 +69,6 @@ public class QueryProcessor {
 
     }
 
-    public String listToString(LinkedList<Integer> list) {
-
-        String postingsListString = "";
-        int i;
-        for (i = 0; i < list.size()-1; i++) {
-            postingsListString = postingsListString + list.get(i).toString() + " ";
-        }
-        postingsListString = postingsListString + list.get(i).toString();
-
-        return postingsListString;
-    }
-
 
     public void taatAnd(String line) {
 
@@ -99,6 +88,8 @@ public class QueryProcessor {
 
         if (postingsListArray.size() == 0) {
             outputFile.println("empty");
+            outputFile.println("Number of documents in the result: " + 0);
+            outputFile.println("Number of comparisons: " + 0);
             return;
         }
 
@@ -120,6 +111,7 @@ public class QueryProcessor {
         postingsListArray.remove(positionOfSmallestList);
         resultPostingsList = smallestPostingsList;
 
+        noOfComparisons = 0;
         while(postingsListArray.size() != 0) {
             resultPostingsList = intersect(resultPostingsList, postingsListArray.get(0));
             postingsListArray.remove(0);
@@ -130,6 +122,8 @@ public class QueryProcessor {
             return;
         }
         outputFile.println(listToString(resultPostingsList));
+        outputFile.println("Number of documents in the result: " + resultPostingsList.size());
+        outputFile.println("Number of comparisons: " + noOfComparisons);
     }
 
 
@@ -151,12 +145,15 @@ public class QueryProcessor {
 
         if (postingsListArray.size() == 0) {
             outputFile.println("empty");
+            outputFile.println("Number of documents in the result: " + 0);
+            outputFile.println("Number of comparisons: " + 0);
             return;
         }
 
         LinkedList<Integer> resultPostingsList = postingsListArray.get(0);
-
         postingsListArray.remove(0);
+        noOfComparisons = 0;
+
         while(postingsListArray.size() != 0) {
             resultPostingsList = union(resultPostingsList, postingsListArray.get(0));
             postingsListArray.remove(0);
@@ -167,6 +164,9 @@ public class QueryProcessor {
             return;
         }
         outputFile.println(listToString(resultPostingsList));
+        outputFile.println("Number of documents in the result: " + resultPostingsList.size());
+        outputFile.println("Number of comparisons: " + noOfComparisons);
+
     }
 
 
@@ -187,6 +187,7 @@ public class QueryProcessor {
                 p1.removeFirst();
             else
                 p2.removeFirst();
+            noOfComparisons ++;
         }
 
         return result;
@@ -212,6 +213,7 @@ public class QueryProcessor {
                 result.add(p2.getFirst());
                 p2.removeFirst();
             }
+            noOfComparisons ++;
         }
 
         if(p1.size() != 0)
@@ -220,6 +222,19 @@ public class QueryProcessor {
             result.addAll(p2);
 
         return result;
+    }
+
+
+    public String listToString(LinkedList<Integer> list) {
+
+        String postingsListString = "";
+        int i;
+        for (i = 0; i < list.size()-1; i++) {
+            postingsListString = postingsListString + list.get(i).toString() + " ";
+        }
+        postingsListString = postingsListString + list.get(i).toString();
+
+        return postingsListString;
     }
 
 }
