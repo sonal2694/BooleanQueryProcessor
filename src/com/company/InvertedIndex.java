@@ -95,4 +95,8 @@ public class InvertedIndex {
             System.out.println(key + " : " +value);
         }
     }
+
+    public HashMap<String, LinkedList<Integer>> getMap() {
+        return invertedIndexMap;
+    }
 }
