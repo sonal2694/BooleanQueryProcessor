@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c8ed0eaf-811e-45c2-b44c-ee5b707762c8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dev/com/company/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dev/com/company/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/dev/com/company/QueryProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dev/com/company/QueryProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/InvertedIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/InvertedIndex.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/QueryProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/QueryProcessor.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -31,14 +32,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="4859" />
+          <entry key="JAVA" value="6659" />
           <entry key="PLAIN_TEXT" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="16" />
-          <entry key="java" value="4859" />
+          <entry key="java" value="6659" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -54,12 +55,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/company/InvertedIndex.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="65" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="65" />
+            <state relative-caret-position="420">
+              <caret line="93" column="12" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3326#3327#0" expanded="true" />
-                <element signature="e#3364#3365#0" expanded="true" />
+                <element signature="e#3357#3358#0" expanded="true" />
+                <element signature="e#3401#3402#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -68,8 +69,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/QueryProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="70" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
+            <state relative-caret-position="259">
+              <caret line="146" column="59" selection-start-line="146" selection-start-column="59" selection-end-line="146" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,8 +81,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/company/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+            <state>
+              <caret column="20" lean-forward="true" selection-start-column="20" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -155,7 +156,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539661691305" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539680481383" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -273,20 +274,20 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/company/InvertedIndex.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="65" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="65" />
+        <state relative-caret-position="420">
+          <caret line="93" column="12" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3326#3327#0" expanded="true" />
-            <element signature="e#3364#3365#0" expanded="true" />
+            <element signature="e#3357#3358#0" expanded="true" />
+            <element signature="e#3401#3402#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+        <state>
+          <caret column="20" lean-forward="true" selection-start-column="20" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -295,8 +296,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/QueryProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="70" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
+        <state relative-caret-position="259">
+          <caret line="146" column="59" selection-start-line="146" selection-start-column="59" selection-end-line="146" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -91,7 +91,7 @@ public class InvertedIndex {
 
         for(String key : invertedIndexMap.keySet()) {
             LinkedList<Integer> value = invertedIndexMap.get(key);
-            System.out.println(key + " : " +value);
+            System.out.println(key + " : " + value);
         }
     }
 
