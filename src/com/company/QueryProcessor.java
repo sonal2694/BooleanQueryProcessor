@@ -39,13 +39,14 @@ public class QueryProcessor {
             getPostings(listOfLines.get(i));
             taatAnd(listOfLines.get(i));
             taatOr(listOfLines.get(i));
-//            daatAnd(listOfLines.get(i));
+            daatAnd(listOfLines.get(i));
 //            daatOr(listOfLines.get(i));
         }
 
         outputFile.close();
 
     } // end of main()
+
 
     public void getPostings(String line) {
 
@@ -64,7 +65,6 @@ public class QueryProcessor {
                 outputFile.println(listToString(postingsList));
             else
                 outputFile.println("empty");
-
         }
 
     }
@@ -85,7 +85,7 @@ public class QueryProcessor {
                 postingsListArray.add(invertedIndexMap.get(terms[i]));
             }
         }
-
+        // if terms don't exist in dictionary
         if (postingsListArray.size() == 0) {
             outputFile.println("empty");
             outputFile.println("Number of documents in the result: " + 0);
@@ -142,7 +142,7 @@ public class QueryProcessor {
                 postingsListArray.add(invertedIndexMap.get(terms[i]));
             }
         }
-
+        // if terms don't exist in dictionary
         if (postingsListArray.size() == 0) {
             outputFile.println("empty");
             outputFile.println("Number of documents in the result: " + 0);
@@ -166,6 +166,36 @@ public class QueryProcessor {
         outputFile.println(listToString(resultPostingsList));
         outputFile.println("Number of documents in the result: " + resultPostingsList.size());
         outputFile.println("Number of comparisons: " + noOfComparisons);
+
+    }
+
+
+    public void daatAnd(String line) {
+
+        outputFile.println("DaatAnd");
+        outputFile.println(line);
+        outputFile.print("Results: ");
+
+        String terms[] = line.split(" ");
+        int noOfTerms = terms.length;
+        ArrayList<LinkedList<Integer>> postingsListArray = new ArrayList<>();
+
+        for (int i = 0; i < noOfTerms; i++) {
+            if ( invertedIndexMap.containsKey(terms[i]) ) {
+                postingsListArray.add(invertedIndexMap.get(terms[i]));
+            }
+        }
+
+        // if terms don't exist in dictionary
+        if (postingsListArray.size() == 0) {
+            outputFile.println("empty");
+            outputFile.println("Number of documents in the result: " + 0);
+            outputFile.println("Number of comparisons: " + 0);
+            return;
+        }
+
+        
+
 
     }
 
