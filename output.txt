@@ -1,15 +1,24 @@
 GetPostings
-degeneran
-PostingsList: [4043]
+ateint
+Postings list: 5113 5130 5274 5404 5582 5925 6036 6050 6099 6205 6411
 GetPostings
-conserv
-PostingsList: [6113, 8092, 8769, 9291, 10859]
-GetPostings
-susalud
-PostingsList: [1038]
+feme
+Postings list: 5049 5228 5506 5521 5550 6027 6132 6192 6298 6411 6657
+TaatAnd
+ateint feme
+Results: 6411
+TaatOr
+ateint feme
+Results: 5049 5113 5130 5228 5274 5404 5506 5521 5550 5582 5925 6027 6036 6050 6099 6132 6192 6205 6298 6411 6657
 GetPostings
 apple
-PostingsList: empty
+Postings list: empty
 GetPostings
 banana
-PostingsList: empty
+Postings list: empty
+TaatAnd
+apple banana
+Results: empty
+TaatOr
+apple banana
+Results: empty
