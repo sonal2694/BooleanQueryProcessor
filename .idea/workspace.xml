@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c8ed0eaf-811e-45c2-b44c-ee5b707762c8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/com/company/QueryProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/QueryProcessor.java" afterDir="false" />
-    </list>
+    <list default="true" id="c8ed0eaf-811e-45c2-b44c-ee5b707762c8" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -150,7 +148,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539711150151" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539711922041" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
