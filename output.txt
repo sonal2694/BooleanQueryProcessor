@@ -1,0 +1,15 @@
+GetPostings
+degeneran
+PostingsList: [4043]
+GetPostings
+conserv
+PostingsList: [6113, 8092, 8769, 9291, 10859]
+GetPostings
+susalud
+PostingsList: [1038]
+GetPostings
+apple
+PostingsList: empty
+GetPostings
+banana
+PostingsList: empty

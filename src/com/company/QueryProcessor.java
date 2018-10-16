@@ -6,12 +6,22 @@ import java.util.*;
 public class QueryProcessor {
 
     PrintWriter outputFile;
+    public String inputFileName;
+    public String outputFileName;
 
-    public static void main(String[] args) throws IOException {
+    public QueryProcessor(String input, String output) {
 
-        String filename = "input.txt";
+        inputFileName = input;
+        outputFileName = output;
+
+    }
+
+    public void process(HashMap<String,LinkedList<Integer>> invertedIndexMap) throws IOException {
+
+        outputFile = new PrintWriter(outputFileName, "UTF-8");
+
         String workingDirectory = System.getProperty("user.dir");
-        File inputFile = new File(workingDirectory, filename);
+        File inputFile = new File(workingDirectory, inputFileName);
         BufferedReader br = new BufferedReader(new FileReader(inputFile));
 
         ArrayList<String> listOfLines = new ArrayList<>();
@@ -20,35 +30,23 @@ public class QueryProcessor {
             listOfLines.add(line);
         }
 
+
         for (int i = 0; i < listOfLines.size(); i++) {
 
-            QueryProcessor obj = new QueryProcessor();
-            obj.getPostings(listOfLines.get(i));
-//            obj.taatOr(listOfLines.get(i));
-//            obj.taatOr(listOfLines.get(i));
-//            obj.daatAnd(listOfLines.get(i));
-//            obj.daatOr(listOfLines.get(i));
+            getPostings(invertedIndexMap, listOfLines.get(i));
+//            taatAnd(listOfLines.get(i));
+//            taatOr(listOfLines.get(i));
+//            daatAnd(listOfLines.get(i));
+//            daatOr(listOfLines.get(i));
         }
 
-//        outputFile.close();
+        outputFile.close();
 
     } // end of main()
 
-    public void getPostings(String line) {
-
-        try {
-            outputFile = new PrintWriter("output.txt", "UTF-8");
-        }
-        catch (Exception e) {
-            System.out.println("Error occurred in getPostings()");
-            System.out.println(e);
-        }
+    public void getPostings(HashMap<String, LinkedList<Integer>> invertedIndexMap, String line) {
 
         String terms[] = line.split(" ");
-        InvertedIndex invertedIndex = new InvertedIndex();
-        HashMap<String, LinkedList<Integer>> invertedIndexMap = invertedIndex.invertedIndexMap;
-
-        System.out.println(invertedIndexMap);
 
         LinkedList<Integer> postingsList = null;
 
