@@ -40,7 +40,7 @@ public class QueryProcessor {
             taatAnd(listOfLines.get(i));
             taatOr(listOfLines.get(i));
             daatAnd(listOfLines.get(i));
-//            daatOr(listOfLines.get(i));
+            daatOr(listOfLines.get(i));
         }
 
         outputFile.close();
@@ -69,7 +69,7 @@ public class QueryProcessor {
 
     }
 
-
+    // TAAT AND implementation
     public void taatAnd(String line) {
 
         outputFile.println("TaatAnd");
@@ -113,7 +113,7 @@ public class QueryProcessor {
 
         noOfComparisons = 0;
         while(postingsListArray.size() != 0) {
-            resultPostingsList = intersect(resultPostingsList, postingsListArray.get(0));
+            resultPostingsList = intersectTaat(resultPostingsList, postingsListArray.get(0));
             postingsListArray.remove(0);
         }
 
@@ -126,7 +126,7 @@ public class QueryProcessor {
         outputFile.println("Number of comparisons: " + noOfComparisons);
     }
 
-
+    // TAAT OR implementation
     public void taatOr(String line) {
 
         outputFile.println("TaatOr");
@@ -155,7 +155,7 @@ public class QueryProcessor {
         noOfComparisons = 0;
 
         while(postingsListArray.size() != 0) {
-            resultPostingsList = union(resultPostingsList, postingsListArray.get(0));
+            resultPostingsList = unionTaat(resultPostingsList, postingsListArray.get(0));
             postingsListArray.remove(0);
         }
 
@@ -170,8 +170,8 @@ public class QueryProcessor {
     }
 
 
+    // DAAT AND implementation
     public void daatAnd(String line) {
-
         outputFile.println("DaatAnd");
         outputFile.println(line);
         outputFile.print("Results: ");
@@ -182,7 +182,8 @@ public class QueryProcessor {
 
         for (int i = 0; i < noOfTerms; i++) {
             if ( invertedIndexMap.containsKey(terms[i]) ) {
-                postingsListArray.add(invertedIndexMap.get(terms[i]));
+                LinkedList<Integer> individualList = new LinkedList<>(invertedIndexMap.get(terms[i]));
+                postingsListArray.add(individualList);
             }
         }
 
@@ -194,13 +195,48 @@ public class QueryProcessor {
             return;
         }
 
-        
+    }
 
+    // DAAT OR implementation
+    public void daatOr(String line) {
+
+        outputFile.println("DaatOr");
+        outputFile.println(line);
+        outputFile.print("Results: ");
+
+        String terms[] = line.split(" ");
+        int noOfTerms = terms.length;
+        ArrayList<LinkedList<Integer>> postingsListArray = new ArrayList<>();
+
+        for (int i = 0; i < noOfTerms; i++) {
+            if ( invertedIndexMap.containsKey(terms[i]) ) {
+                LinkedList<Integer> individualList = new LinkedList<>(invertedIndexMap.get(terms[i]));
+                postingsListArray.add(individualList);
+            }
+        }
+
+        // if terms don't exist in dictionary
+        if (postingsListArray.size() == 0) {
+            outputFile.println("empty");
+            outputFile.println("Number of documents in the result: " + 0);
+            outputFile.println("Number of comparisons: " + 0);
+            return;
+        }
+
+        LinkedList<Integer> resultPostingsList = unionDaat(postingsListArray);
+
+        if(resultPostingsList.size() == 0) {
+            outputFile.println("empty");
+            return;
+        }
+        outputFile.println(listToString(resultPostingsList));
+        outputFile.println("Number of documents in the result: " + resultPostingsList.size());
+        outputFile.println("Number of comparisons: " + noOfComparisons);
 
     }
 
 
-    public LinkedList<Integer> intersect(LinkedList<Integer> origP1, LinkedList<Integer> origP2) {
+    public LinkedList<Integer> intersectTaat(LinkedList<Integer> origP1, LinkedList<Integer> origP2) {
 
         LinkedList<Integer> result = new LinkedList<>();
         LinkedList<Integer> p1 = new LinkedList<>(origP1);
@@ -223,7 +259,7 @@ public class QueryProcessor {
         return result;
     }
 
-    public LinkedList<Integer> union(LinkedList<Integer> origP1, LinkedList<Integer> origP2) {
+    public LinkedList<Integer> unionTaat(LinkedList<Integer> origP1, LinkedList<Integer> origP2) {
 
         LinkedList<Integer> result = new LinkedList<>();
         LinkedList<Integer> p1 = new LinkedList<>(origP1);
@@ -252,6 +288,44 @@ public class QueryProcessor {
             result.addAll(p2);
 
         return result;
+    }
+
+
+    public LinkedList<Integer> unionDaat(ArrayList<LinkedList<Integer>> postingsListArray) {
+
+        noOfComparisons = 0;
+        LinkedList<Integer> resultPostingsList = new LinkedList<>();
+        int postingsListNumber = 0;
+
+        while (!postingsListArray.isEmpty()) {
+
+            int minDocId = Integer.MAX_VALUE;
+            for(int i = 0; i < postingsListArray.size(); i++) {
+
+                LinkedList<Integer> l = postingsListArray.get(i);
+                if ( l.get(0) < minDocId ) {
+                    minDocId = l.get(0);
+                    postingsListNumber = i;
+                    noOfComparisons ++;
+                }
+            }
+
+            // if not already in result
+//            if( !resultPostingsList.contains(minDocId))
+//                resultPostingsList.add(minDocId);
+            for(int i = 0; i < postingsListArray.size(); i++) {
+                LinkedList<Integer> l = postingsListArray.get(i);
+                if(l.get(0) == minDocId)
+                    l.removeFirst();
+            }
+            resultPostingsList.add(minDocId);
+            //postingsListArray.get(postingsListNumber).removeFirst();
+
+            if (postingsListArray.get(postingsListNumber).size() == 0) {
+                postingsListArray.remove(postingsListNumber);
+            }
+        }
+        return resultPostingsList;
     }
 
 
