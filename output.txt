@@ -18,9 +18,37 @@ DaatAnd
 ateint feme
 Results: 6411
 Number of documents in the result: 1
-Number of comparisons: 0
+Number of comparisons: 48
 DaatOr
 ateint feme
 Results: 5049 5113 5130 5228 5274 5404 5506 5521 5550 5582 5925 6027 6036 6050 6099 6132 6192 6205 6298 6411 6657
 Number of documents in the result: 21
-Number of comparisons: 30
+Number of comparisons: 30GetPostings
+alguë
+Postings list: 5218
+GetPostings
+accè
+Postings list: 6160 6244
+GetPostings
+armé
+Postings list: 6350
+TaatAnd
+alguë accè armé 
+Results: empty
+Number of documents in the result: 0
+Number of comparisons: 1
+TaatOr
+alguë accè armé 
+Results: 5218 6160 6244 6350
+Number of documents in the result: 4
+Number of comparisons: 4
+DaatAnd
+alguë accè armé 
+Results: empty
+Number of documents in the result: 0
+Number of comparisons: 5
+DaatOr
+alguë accè armé 
+Results: 5218 6160 6244 6350
+Number of documents in the result: 4
+Number of comparisons: 4

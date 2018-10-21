@@ -117,11 +117,11 @@ public class QueryProcessor {
             postingsListArray.remove(0);
         }
 
-        if(resultPostingsList.size() == 0) {
+        if(resultPostingsList.size() == 0)
             outputFile.println("empty");
-            return;
-        }
-        outputFile.println(listToString(resultPostingsList));
+        else
+            outputFile.println(listToString(resultPostingsList));
+
         outputFile.println("Number of documents in the result: " + resultPostingsList.size());
         outputFile.println("Number of comparisons: " + noOfComparisons);
     }
@@ -159,11 +159,11 @@ public class QueryProcessor {
             postingsListArray.remove(0);
         }
 
-        if(resultPostingsList.size() == 0) {
+        if(resultPostingsList.size() == 0)
             outputFile.println("empty");
-            return;
-        }
-        outputFile.println(listToString(resultPostingsList));
+        else
+            outputFile.println(listToString(resultPostingsList));
+
         outputFile.println("Number of documents in the result: " + resultPostingsList.size());
         outputFile.println("Number of comparisons: " + noOfComparisons);
 
@@ -197,11 +197,11 @@ public class QueryProcessor {
 
         LinkedList<Integer> resultPostingsList = intersectDaat(postingsListArray);
 
-        if(resultPostingsList.size() == 0) {
+        if(resultPostingsList.size() == 0)
             outputFile.println("empty");
-            return;
-        }
-        outputFile.println(listToString(resultPostingsList));
+        else
+            outputFile.println(listToString(resultPostingsList));
+
         outputFile.println("Number of documents in the result: " + resultPostingsList.size());
         outputFile.println("Number of comparisons: " + noOfComparisons);
 
@@ -235,13 +235,13 @@ public class QueryProcessor {
 
         LinkedList<Integer> resultPostingsList = unionDaat(postingsListArray);
 
-        if(resultPostingsList.size() == 0) {
+        if(resultPostingsList.size() == 0)
             outputFile.println("empty");
-            return;
-        }
-        outputFile.println(listToString(resultPostingsList));
+        else
+            outputFile.println(listToString(resultPostingsList));
+
         outputFile.println("Number of documents in the result: " + resultPostingsList.size());
-        outputFile.println("Number of comparisons: " + noOfComparisons);
+        outputFile.print("Number of comparisons: " + noOfComparisons);
 
     }
 
@@ -308,7 +308,6 @@ public class QueryProcessor {
 
         noOfComparisons = 0;
         LinkedList<Integer> resultPostingsList = new LinkedList<>();
-        int postingsListNumber = 0;
 
         while (!postingsListArray.isEmpty()) {
 
@@ -317,36 +316,31 @@ public class QueryProcessor {
                 LinkedList<Integer> l = postingsListArray.get(i);
                 if ( l.get(0) < minDocId ) {
                     minDocId = l.get(0);
-                    postingsListNumber = i;
                     noOfComparisons ++;
                 }
             }
 
-            // if not already in result
-//            if( !resultPostingsList.contains(minDocId))
-//                resultPostingsList.add(minDocId);
             for(int i = 0; i < postingsListArray.size(); i++) {
                 LinkedList<Integer> l = postingsListArray.get(i);
                 if(l.get(0) == minDocId)
                     l.removeFirst();
             }
             resultPostingsList.add(minDocId);
-            //postingsListArray.get(postingsListNumber).removeFirst();
 
             postingsListArray.removeIf(p -> p.isEmpty());
-//            if (postingsListArray.get(postingsListNumber).size() == 0) {
-//                postingsListArray.remove(postingsListNumber);
-//            }
+
         }
         return resultPostingsList;
     }
 
     public LinkedList<Integer> intersectDaat(ArrayList<LinkedList<Integer>> postingsListArray) {
+
         noOfComparisons = 0;
         LinkedList<Integer> resultPostingsList = new LinkedList<>();
         HashSet<Integer> hashSet = new HashSet<>();
+        int originalSize = postingsListArray.size();
 
-        while ( !postingsListArray.isEmpty() ) {
+        while ( postingsListArray.size() == originalSize ) {
             for(int i = 0; i < postingsListArray.size(); i++ ) {
                 LinkedList<Integer> l = postingsListArray.get(i);
                 if( !l.isEmpty())
@@ -355,7 +349,7 @@ public class QueryProcessor {
                     return resultPostingsList;
             }
 
-            if ( hashSet.size() == 1) {
+            if ( hashSet.size() == 1 ) {
 
                 resultPostingsList.add(hashSet.iterator().next());
                 for ( int i =0; i < postingsListArray.size(); i++) {
@@ -376,8 +370,11 @@ public class QueryProcessor {
 
                     LinkedList<Integer> l = postingsListArray.get(i);
                     if(!l.isEmpty()) {
-                        if(l.get(0) > maxDocID)
+                        if(l.get(0) > maxDocID) {
                             maxDocID = l.get(0);
+                            noOfComparisons ++;
+                        }
+
                     }
                     else
                         System.out.println("List " + i + "is empty. Cannot get max doc id.");
@@ -389,7 +386,7 @@ public class QueryProcessor {
 
                     if(!l.isEmpty()) {
                         if(l.get(0) < maxDocID) {
-
+                            noOfComparisons ++;
                             l.removeFirst();
                         }
                     }
@@ -403,7 +400,6 @@ public class QueryProcessor {
             hashSet.clear();
 
         }
-        System.out.println("Returning");
         return resultPostingsList;
     }
 
