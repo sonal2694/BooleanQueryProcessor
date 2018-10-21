@@ -12,7 +12,7 @@ public class App {
         InvertedIndex obj = new InvertedIndex(indexPath);
         obj.readIndex();
         HashMap<String, LinkedList<Integer>> invertedIndexMap = obj.constructInvertedIndex();
-        //obj.printInvertedIndexMap(invertedIndexMap);
+        obj.printInvertedIndexMap(invertedIndexMap);
 
         String input = "input.txt";
         String output = "output.txt";

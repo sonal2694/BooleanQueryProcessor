@@ -241,7 +241,7 @@ public class QueryProcessor {
             outputFile.println(listToString(resultPostingsList));
 
         outputFile.println("Number of documents in the result: " + resultPostingsList.size());
-        outputFile.print("Number of comparisons: " + noOfComparisons);
+        outputFile.println("Number of comparisons: " + noOfComparisons);
 
     }
 
@@ -262,14 +262,65 @@ public class QueryProcessor {
                 p1.removeFirst();
                 p2.removeFirst();
             }
-            else if (p1.getFirst() < p2.getFirst())
-                p1.removeFirst();
-            else
-                p2.removeFirst();
+            else if ( p1.getFirst() < p2.getFirst() ) {
+                if ( hasSkip(p1) && !skip(p1).isEmpty() && (skip(p1).getFirst() <= p2.getFirst()) ) {
+                    while (hasSkip(p1) && !skip(p1).isEmpty() && (skip(p1).getFirst() <= p2.getFirst())) {
+                        p1 = skip(p1);
+                        System.out.println("in loop1");
+                    }
+                }
+                else
+                    p1.removeFirst();
+            }
+            else {
+
+                if ( hasSkip(p2) && !skip(p2).isEmpty() && (skip(p2).getFirst() <= p1.getFirst()) ) {
+                    while (hasSkip(p2) && !skip(p2).isEmpty() && (skip(p2).getFirst() <= p1.getFirst())) {
+                        p2 = skip(p2);
+                        System.out.println("in loop2");
+                    }
+                }
+                else
+                    p2.removeFirst();
+            }
             noOfComparisons ++;
         }
 
         return result;
+    }
+
+    public boolean hasSkip(LinkedList<Integer> p) {
+
+        if(p.size() <= 2)
+            return false;
+
+        boolean result = false;
+        int sizeP = p.size();
+        int noOfSkips = (int)Math.sqrt(sizeP);
+        int skipRange = sizeP/noOfSkips;
+
+        if ( p.get(skipRange-1) != null)
+            return true;
+
+        return result;
+    }
+
+    public LinkedList<Integer> skip(LinkedList<Integer> origP) {
+
+        LinkedList<Integer> p = new LinkedList<>(origP);
+
+        if(p.size() <= 2)
+            return p;
+        int sizeP = p.size();
+        int noOfSkips = (int)Math.sqrt(sizeP);
+        int skipRange = sizeP/noOfSkips;
+
+        if ( p.get(skipRange-1) != null) {
+            p.subList(0, skipRange).clear();
+        }
+
+        return p;
+
     }
 
     public LinkedList<Integer> unionTaat(LinkedList<Integer> origP1, LinkedList<Integer> origP2) {
