@@ -45,7 +45,7 @@ public class QueryProcessor {
 
         outputFile.close();
 
-    } // end of main()
+    } // end of process()
 
 
     public void getPostings(String line) {
@@ -195,6 +195,16 @@ public class QueryProcessor {
             return;
         }
 
+        LinkedList<Integer> resultPostingsList = intersectDaat(postingsListArray);
+
+        if(resultPostingsList.size() == 0) {
+            outputFile.println("empty");
+            return;
+        }
+        outputFile.println(listToString(resultPostingsList));
+        outputFile.println("Number of documents in the result: " + resultPostingsList.size());
+        outputFile.println("Number of comparisons: " + noOfComparisons);
+
     }
 
     // DAAT OR implementation
@@ -235,6 +245,9 @@ public class QueryProcessor {
 
     }
 
+
+    // INTERSECT AND UNION FUNCTIONS
+    // STARTS HERE
 
     public LinkedList<Integer> intersectTaat(LinkedList<Integer> origP1, LinkedList<Integer> origP2) {
 
@@ -301,7 +314,6 @@ public class QueryProcessor {
 
             int minDocId = Integer.MAX_VALUE;
             for(int i = 0; i < postingsListArray.size(); i++) {
-
                 LinkedList<Integer> l = postingsListArray.get(i);
                 if ( l.get(0) < minDocId ) {
                     minDocId = l.get(0);
@@ -321,10 +333,77 @@ public class QueryProcessor {
             resultPostingsList.add(minDocId);
             //postingsListArray.get(postingsListNumber).removeFirst();
 
-            if (postingsListArray.get(postingsListNumber).size() == 0) {
-                postingsListArray.remove(postingsListNumber);
-            }
+            postingsListArray.removeIf(p -> p.isEmpty());
+//            if (postingsListArray.get(postingsListNumber).size() == 0) {
+//                postingsListArray.remove(postingsListNumber);
+//            }
         }
+        return resultPostingsList;
+    }
+
+    public LinkedList<Integer> intersectDaat(ArrayList<LinkedList<Integer>> postingsListArray) {
+        noOfComparisons = 0;
+        LinkedList<Integer> resultPostingsList = new LinkedList<>();
+        HashSet<Integer> hashSet = new HashSet<>();
+
+        while ( !postingsListArray.isEmpty() ) {
+            for(int i = 0; i < postingsListArray.size(); i++ ) {
+                LinkedList<Integer> l = postingsListArray.get(i);
+                if( !l.isEmpty())
+                    hashSet.add(l.get(0));
+                else
+                    return resultPostingsList;
+            }
+
+            if ( hashSet.size() == 1) {
+
+                resultPostingsList.add(hashSet.iterator().next());
+                for ( int i =0; i < postingsListArray.size(); i++) {
+                    LinkedList<Integer> l = postingsListArray.get(i);
+                    l.removeFirst();
+
+                    if (l.isEmpty())
+                        return resultPostingsList;
+                }
+            }
+
+            else {
+
+                //finding maximum of all first values
+                int maxDocID = Integer.MIN_VALUE;
+
+                for ( int i = 0; i < postingsListArray.size(); i++) {
+
+                    LinkedList<Integer> l = postingsListArray.get(i);
+                    if(!l.isEmpty()) {
+                        if(l.get(0) > maxDocID)
+                            maxDocID = l.get(0);
+                    }
+                    else
+                        System.out.println("List " + i + "is empty. Cannot get max doc id.");
+                } // end for
+
+                // removing all elements less than max doc id
+                for( int i = 0; i < postingsListArray.size(); i++) {
+                    LinkedList<Integer> l = postingsListArray.get(i);
+
+                    if(!l.isEmpty()) {
+                        if(l.get(0) < maxDocID) {
+
+                            l.removeFirst();
+                        }
+                    }
+                    else
+                        System.out.println("List " + i + "is empty. Cannot remove element.");
+                }
+
+            }
+
+            postingsListArray.removeIf(p -> p.isEmpty());
+            hashSet.clear();
+
+        }
+        System.out.println("Returning");
         return resultPostingsList;
     }
 

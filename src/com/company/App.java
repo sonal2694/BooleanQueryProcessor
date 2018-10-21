@@ -8,8 +8,8 @@ public class App {
 
     public static void main(String[] args) throws IOException {
 
-        String path = "/Users/sonalsingh/index";
-        InvertedIndex obj = new InvertedIndex(path);
+        String indexPath = "/Users/sonalsingh/index";
+        InvertedIndex obj = new InvertedIndex(indexPath);
         obj.readIndex();
         HashMap<String, LinkedList<Integer>> invertedIndexMap = obj.constructInvertedIndex();
         //obj.printInvertedIndexMap(invertedIndexMap);
