@@ -29,7 +29,6 @@ public class InvertedIndex {
         try {
             Directory directory = FSDirectory.open(path);
             directoryReader = DirectoryReader.open(directory);
-            //System.out.println("Documents in index: " + directoryReader.numDocs());
         }
         catch (Exception e ){
             System.out.println("Exception occurred in readIndex");
@@ -56,13 +55,11 @@ public class InvertedIndex {
 
                         postingsEnum = MultiFields.getTermDocsEnum(directoryReader, field, termsEnum.term());
                         String stringTerm = termsEnum.term().utf8ToString();
-                        //System.out.println(stringTerm);
                         LinkedList<Integer> postingsList;
 
                         while(postingsEnum.nextDoc() != NO_MORE_DOCS) {
 
                             int docID = postingsEnum.docID();
-
                             if(invertedIndexMap.containsKey(stringTerm))
                                 postingsList = invertedIndexMap.get(stringTerm);
                             else

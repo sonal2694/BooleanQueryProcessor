@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="dev:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/dev_jar</output-path>
+    <root id="archive" name="dev.jar">
+      <element id="module-output" name="dev" />
+      <element id="library" level="project" name="analyzers-common" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/lucene-7.5.0/core/lucene-core-7.5.0.jar" path-in-jar="/" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

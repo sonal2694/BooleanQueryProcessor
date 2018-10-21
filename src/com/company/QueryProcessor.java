@@ -11,6 +11,7 @@ public class QueryProcessor {
     public String outputFileName;
     public HashMap<String, LinkedList<Integer>> invertedIndexMap;
     int noOfComparisons;
+    int printCount = 0;
 
     public QueryProcessor(String input, String output, HashMap<String,LinkedList<Integer>> map) {
 
@@ -23,10 +24,7 @@ public class QueryProcessor {
     public void process() throws IOException {
 
         outputFile = new PrintWriter(outputFileName, "UTF-8");
-
-        String workingDirectory = System.getProperty("user.dir");
-        File inputFile = new File(workingDirectory, inputFileName);
-        BufferedReader br = new BufferedReader(new FileReader(inputFile));
+        BufferedReader br = new BufferedReader(new FileReader(inputFileName));
 
         ArrayList<String> listOfLines = new ArrayList<>();
         String line = null;
@@ -36,6 +34,7 @@ public class QueryProcessor {
 
         for (int i = 0; i < listOfLines.size(); i++) {
 
+            printCount++;
             getPostings(listOfLines.get(i));
             taatAnd(listOfLines.get(i));
             taatOr(listOfLines.get(i));
@@ -52,6 +51,9 @@ public class QueryProcessor {
 
         String terms[] = line.split(" ");
         LinkedList<Integer> postingsList = new LinkedList<>();
+
+        if(printCount != 1)
+            outputFile.println();
 
         for(int i = 0; i <terms.length; i++) {
             outputFile.println("GetPostings");
@@ -241,7 +243,7 @@ public class QueryProcessor {
             outputFile.println(listToString(resultPostingsList));
 
         outputFile.println("Number of documents in the result: " + resultPostingsList.size());
-        outputFile.println("Number of comparisons: " + noOfComparisons);
+        outputFile.print("Number of comparisons: " + noOfComparisons);
 
     }
 
@@ -266,7 +268,6 @@ public class QueryProcessor {
                 if ( hasSkip(p1) && !skip(p1).isEmpty() && (skip(p1).getFirst() <= p2.getFirst()) ) {
                     while (hasSkip(p1) && !skip(p1).isEmpty() && (skip(p1).getFirst() <= p2.getFirst())) {
                         p1 = skip(p1);
-                        System.out.println("in loop1");
                     }
                 }
                 else
@@ -277,7 +278,6 @@ public class QueryProcessor {
                 if ( hasSkip(p2) && !skip(p2).isEmpty() && (skip(p2).getFirst() <= p1.getFirst()) ) {
                     while (hasSkip(p2) && !skip(p2).isEmpty() && (skip(p2).getFirst() <= p1.getFirst())) {
                         p2 = skip(p2);
-                        System.out.println("in loop2");
                     }
                 }
                 else
@@ -288,6 +288,7 @@ public class QueryProcessor {
 
         return result;
     }
+
 
     public boolean hasSkip(LinkedList<Integer> p) {
 
@@ -304,6 +305,7 @@ public class QueryProcessor {
 
         return result;
     }
+
 
     public LinkedList<Integer> skip(LinkedList<Integer> origP) {
 
@@ -355,35 +357,6 @@ public class QueryProcessor {
     }
 
 
-    public LinkedList<Integer> unionDaat(ArrayList<LinkedList<Integer>> postingsListArray) {
-
-        noOfComparisons = 0;
-        LinkedList<Integer> resultPostingsList = new LinkedList<>();
-
-        while (!postingsListArray.isEmpty()) {
-
-            int minDocId = Integer.MAX_VALUE;
-            for(int i = 0; i < postingsListArray.size(); i++) {
-                LinkedList<Integer> l = postingsListArray.get(i);
-                if ( l.get(0) < minDocId ) {
-                    minDocId = l.get(0);
-                    noOfComparisons ++;
-                }
-            }
-
-            for(int i = 0; i < postingsListArray.size(); i++) {
-                LinkedList<Integer> l = postingsListArray.get(i);
-                if(l.get(0) == minDocId)
-                    l.removeFirst();
-            }
-            resultPostingsList.add(minDocId);
-
-            postingsListArray.removeIf(p -> p.isEmpty());
-
-        }
-        return resultPostingsList;
-    }
-
     public LinkedList<Integer> intersectDaat(ArrayList<LinkedList<Integer>> postingsListArray) {
 
         noOfComparisons = 0;
@@ -413,7 +386,6 @@ public class QueryProcessor {
             }
 
             else {
-
                 //finding maximum of all first values
                 int maxDocID = Integer.MIN_VALUE;
 
@@ -455,6 +427,35 @@ public class QueryProcessor {
     }
 
 
+    public LinkedList<Integer> unionDaat(ArrayList<LinkedList<Integer>> postingsListArray) {
+
+        noOfComparisons = 0;
+        LinkedList<Integer> resultPostingsList = new LinkedList<>();
+
+        while (!postingsListArray.isEmpty()) {
+
+            int minDocId = Integer.MAX_VALUE;
+            for(int i = 0; i < postingsListArray.size(); i++) {
+                LinkedList<Integer> l = postingsListArray.get(i);
+                if ( l.get(0) < minDocId ) {
+                    minDocId = l.get(0);
+                    noOfComparisons ++;
+                }
+            }
+
+            for(int i = 0; i < postingsListArray.size(); i++) {
+                LinkedList<Integer> l = postingsListArray.get(i);
+                if(l.get(0) == minDocId)
+                    l.removeFirst();
+            }
+            resultPostingsList.add(minDocId);
+            postingsListArray.removeIf(p -> p.isEmpty());
+
+        }
+        return resultPostingsList;
+    }
+
+
     public String listToString(LinkedList<Integer> list) {
 
         String postingsListString = "";
@@ -463,7 +464,6 @@ public class QueryProcessor {
             postingsListString = postingsListString + list.get(i).toString() + " ";
         }
         postingsListString = postingsListString + list.get(i).toString();
-
         return postingsListString;
     }
 
